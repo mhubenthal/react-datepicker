@@ -66,36 +66,62 @@ return /******/ (function(modules) { // webpackBootstrap
 	  displayName: "DatePicker",
 
 	  propTypes: {
-	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string)
+	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
+	    focus: React.PropTypes.bool,
+	    onFocusChange: React.PropTypes.func,
+	    onClickOutside: React.PropTypes.func
 	  },
+
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+	      focus: null,
+	      onFocusChange: null,
+	      onClickOutside: null
 	    };
 	  },
+
 	  getInitialState: function getInitialState() {
 	    return {
-	      focus: false
+	      focus: this.props.focus
 	    };
+	  },
+
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    // Toggle calendar
+	    if (nextProps.focus !== this.props.focus) {
+	      this.setState({
+	        focus: nextProps.focus
+	      });
+	    }
 	  },
 
 	  handleFocus: function handleFocus() {
-	    this.setState({
-	      focus: true
-	    });
+	    if (this.props.onFocusChange) {
+	      this.props.onFocusChange(true);
+	    } else {
+	      this.setState({
+	        focus: true
+	      });
+	    }
 	  },
 
 	  hideCalendar: function hideCalendar() {
-	    setTimeout((function () {
-	      this.setState({
-	        focus: false
-	      });
-	    }).bind(this), 0);
+	    if (this.props.onClickOutside) {
+	      setTimeout((function () {
+	        this.props.onClickOutside();
+	      }).bind(this), 0);
+	    } else {
+	      setTimeout((function () {
+	        this.setState({
+	          focus: false
+	        });
+	      }).bind(this), 0);
+	    }
 	  },
 
 	  handleSelect: function handleSelect(date) {
 	    this.setSelected(date);
-
 	    setTimeout((function () {
 	      this.hideCalendar();
 	    }).bind(this), 200);
@@ -106,9 +132,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  onInputClick: function onInputClick() {
-	    this.setState({
-	      focus: true
-	    });
+	    if (this.props.onFocusChange) {
+	      this.props.onFocusChange(true);
+	    } else {
+	      this.setState({
+	        focus: true
+	      });
+	    }
 	  },
 
 	  calendar: function calendar() {

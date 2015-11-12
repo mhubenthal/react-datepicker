@@ -6,36 +6,62 @@ var DateInput = require('./date_input');
 
 var DatePicker = React.createClass({
   propTypes: {
-    weekdays: React.PropTypes.arrayOf( React.PropTypes.string )
+    weekdays: React.PropTypes.arrayOf( React.PropTypes.string ),
+    focus: React.PropTypes.bool,
+    onFocusChange: React.PropTypes.func,
+    onClickOutside: React.PropTypes.func
   },
+
   getDefaultProps: function() {
     return {
-      weekdays: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ]
+      weekdays: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ],
+      focus: null,
+      onFocusChange: null,
+      onClickOutside: null
     };
   },
+
   getInitialState: function() {
     return {
-      focus: false
+      focus: this.props.focus
     };
+  },
+
+  componentWillReceiveProps: function(nextProps) {
+    // Toggle calendar
+    if (nextProps.focus !== this.props.focus) {
+      this.setState({
+        focus: nextProps.focus
+      });
+    }
   },
 
   handleFocus: function() {
-    this.setState({
-      focus: true
-    });
+    if(this.props.onFocusChange){
+      this.props.onFocusChange(true);
+    } else {
+      this.setState({
+        focus: true
+      });
+    }
   },
 
   hideCalendar: function() {
-    setTimeout(function() {
-      this.setState({
-        focus: false
-      });
-    }.bind(this), 0);
+    if(this.props.onClickOutside){
+      setTimeout(function() {
+        this.props.onClickOutside();
+      }.bind(this), 0);      
+    } else {
+      setTimeout( function() {
+        this.setState( {
+          focus: false
+        } );
+      }.bind( this ), 0 );
+    }
   },
 
   handleSelect: function(date) {
     this.setSelected(date);
-
     setTimeout(function(){
       this.hideCalendar();
     }.bind(this), 200);
@@ -46,9 +72,13 @@ var DatePicker = React.createClass({
   },
 
   onInputClick: function() {
-    this.setState({
-      focus: true
-    });
+    if(this.props.onFocusChange){
+      this.props.onFocusChange(true);
+    } else {
+      this.setState({
+        focus: true
+      });
+    }
   },
 
   calendar: function() {
