@@ -6,6 +6,10 @@ var moment = require('moment');
 var Calendar = React.createClass({
   mixins: [require('react-onclickoutside')],
 
+  propTypes: {
+    weekdays: React.PropTypes.array.isRequired
+  },
+
   handleClickOutside: function() {
     this.props.hideCalendar();
   },
@@ -36,7 +40,7 @@ var Calendar = React.createClass({
   },
 
   initializeMomentLocale: function() {
-    var weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    var weekdays = this.props.weekdays.slice( 0 );
     weekdays = weekdays.concat(weekdays.splice(0, this.props.weekStart));
 
     moment.locale('en', {

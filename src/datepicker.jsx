@@ -5,6 +5,14 @@ var Calendar = require('./calendar');
 var DateInput = require('./date_input');
 
 var DatePicker = React.createClass({
+  propTypes: {
+    weekdays: React.PropTypes.arrayOf( React.PropTypes.string )
+  },
+  getDefaultProps: function() {
+    return {
+      weekdays: [ "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa" ]
+    };
+  },
   getInitialState: function() {
     return {
       focus: false
@@ -53,7 +61,8 @@ var DatePicker = React.createClass({
             hideCalendar={this.hideCalendar}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
-            weekStart={this.props.weekStart} />
+            weekStart={this.props.weekStart} 
+            weekdays={this.props.weekdays} />
         </Popover>
       );
     }
