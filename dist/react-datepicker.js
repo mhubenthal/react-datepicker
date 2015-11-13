@@ -152,6 +152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          hideCalendar: this.hideCalendar,
 	          minDate: this.props.minDate,
 	          maxDate: this.props.maxDate,
+	          validDates: this.props.validDates,
 	          weekStart: this.props.weekStart,
 	          weekdays: this.props.weekdays })
 	      );
@@ -1919,9 +1920,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  renderDay: function renderDay(day, key) {
-	    var minDate = new DateUtil(this.props.minDate).safeClone(),
-	        maxDate = new DateUtil(this.props.maxDate).safeClone(),
-	        disabled = day.isBefore(minDate) || day.isAfter(maxDate);
+	    var validDates = this.props.validDates.map(function (date) {
+	      return new DateUtil(date).safeClone();
+	    });
+
+	    var isDateValid = validDates.filter(function (date) {
+	      return date.sameDay(day);
+	    });
 
 	    return React.createElement(Day, {
 	      key: key,
@@ -1929,7 +1934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      date: this.state.date,
 	      onClick: this.handleDayClick.bind(this, day),
 	      selected: new DateUtil(this.props.selected),
-	      disabled: disabled });
+	      disabled: isDateValid.length === 0 });
 	  },
 
 	  renderPreviousMonthButton: function renderPreviousMonthButton() {

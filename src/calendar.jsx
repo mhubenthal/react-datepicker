@@ -84,9 +84,13 @@ var Calendar = React.createClass({
   },
 
   renderDay: function(day, key) {
-    var minDate = new DateUtil(this.props.minDate).safeClone(),
-        maxDate = new DateUtil(this.props.maxDate).safeClone(),
-        disabled = day.isBefore(minDate) || day.isAfter(maxDate);
+    var validDates = this.props.validDates.map(function(date) {
+      return new DateUtil(date).safeClone();
+    });
+
+    var isDateValid = validDates.filter(function(date) {
+      return date.sameDay(day);
+    });
 
     return (
       <Day
@@ -95,7 +99,7 @@ var Calendar = React.createClass({
         date={this.state.date}
         onClick={this.handleDayClick.bind(this, day)}
         selected={new DateUtil(this.props.selected)}
-        disabled={disabled} />
+        disabled={isDateValid.length === 0} />
     );
   },
 

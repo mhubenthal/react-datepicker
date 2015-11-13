@@ -91,6 +91,7 @@ var DatePicker = React.createClass({
             hideCalendar={this.hideCalendar}
             minDate={this.props.minDate}
             maxDate={this.props.maxDate}
+            validDates={this.props.validDates}
             weekStart={this.props.weekStart} 
             weekdays={this.props.weekdays} />
         </Popover>
