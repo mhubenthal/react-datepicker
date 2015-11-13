@@ -2008,16 +2008,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	          { className: "datepicker__current-month" },
 	          this.state.date.format("MMMM YYYY")
 	        ),
-	        this.renderNextMonthButton(),
-	        React.createElement(
-	          "div",
-	          null,
-	          this.header()
-	        )
+	        this.renderNextMonthButton()
 	      ),
 	      React.createElement(
 	        "div",
 	        { className: "datepicker__month" },
+	        React.createElement(
+	          "div",
+	          { className: "datepicker__weekdays" },
+	          this.header()
+	        ),
 	        this.weeks()
 	      )
 	    );

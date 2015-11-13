@@ -179,11 +179,11 @@ var Calendar = React.createClass({
             {this.state.date.format("MMMM YYYY")}
           </span>
           {this.renderNextMonthButton()}
-          <div>
-            {this.header()}
-          </div>
         </div>
         <div className="datepicker__month">
+          <div className="datepicker__weekdays">
+            {this.header()}
+          </div>
           {this.weeks()}
         </div>
       </div>
