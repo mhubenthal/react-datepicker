@@ -22,6 +22,14 @@ DateUtil.prototype.day = function() {
   return this._date.date();
 };
 
+DateUtil.prototype.month = function() {
+  return this._date.month();
+};
+
+DateUtil.prototype.year = function() {
+  return this._date.year();
+};
+
 DateUtil.prototype.mapDaysInWeek = function(callback) {
   var week = [];
   var firstDay = this._date.clone();

@@ -99,6 +99,66 @@ var Calendar = React.createClass({
     );
   },
 
+  renderPreviousMonthButton: function() {
+    if(this.props.minDate) {
+      var prevMonth = this.state.date.clone();
+      prevMonth = prevMonth.subtractMonth();
+      var minDate = new DateUtil(this.props.minDate).safeClone();
+      var renderButton = true;
+      
+      renderButton = (prevMonth.month() >= minDate.month());
+      if(prevMonth.month() === 11) {
+        if(prevMonth.year() < minDate.year()) {
+          renderButton = false;
+        }
+      }
+
+      if(renderButton) {
+        return(
+          <a className="datepicker__navigation datepicker__navigation--previous"
+              onClick={this.decreaseMonth}>
+          </a>
+        );
+      }
+    } else {
+      return(
+        <a className="datepicker__navigation datepicker__navigation--previous"
+            onClick={this.decreaseMonth}>
+        </a>
+      );
+    }
+  },
+
+  renderNextMonthButton: function() {
+    if(this.props.maxDate) {
+      var nextMonth = this.state.date.clone();
+      nextMonth = nextMonth.addMonth();
+      var maxDate = new DateUtil(this.props.maxDate).safeClone();
+      var renderButton = true;
+
+      renderButton = (nextMonth.month() <= maxDate.month());
+      if(nextMonth.month() === 0) {
+        if(nextMonth.year() > maxDate.year()) {
+          renderButton = false;
+        }
+      }
+
+      if(renderButton) {
+        return(
+          <a className="datepicker__navigation datepicker__navigation--next"
+              onClick={this.increaseMonth}>
+          </a>
+        );
+      }
+    } else {
+      return(
+        <a className="datepicker__navigation datepicker__navigation--next"
+            onClick={this.increaseMonth}>
+        </a>
+      ); 
+    }
+  },
+
   days: function(weekStart) {
     return weekStart.mapDaysInWeek(this.renderDay);
   },
@@ -114,15 +174,11 @@ var Calendar = React.createClass({
       <div className="datepicker">
         <div className="datepicker__triangle"></div>
         <div className="datepicker__header">
-          <a className="datepicker__navigation datepicker__navigation--previous"
-              onClick={this.decreaseMonth}>
-          </a>
+          {this.renderPreviousMonthButton()}
           <span className="datepicker__current-month">
             {this.state.date.format("MMMM YYYY")}
           </span>
-          <a className="datepicker__navigation datepicker__navigation--next"
-              onClick={this.increaseMonth}>
-          </a>
+          {this.renderNextMonthButton()}
           <div>
             {this.header()}
           </div>

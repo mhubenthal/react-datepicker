@@ -1755,6 +1755,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return this._date.date();
 	};
 
+	DateUtil.prototype.month = function () {
+	  return this._date.month();
+	};
+
+	DateUtil.prototype.year = function () {
+	  return this._date.year();
+	};
+
 	DateUtil.prototype.mapDaysInWeek = function (callback) {
 	  var week = [];
 	  var firstDay = this._date.clone();
@@ -1924,6 +1932,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	      disabled: disabled });
 	  },
 
+	  renderPreviousMonthButton: function renderPreviousMonthButton() {
+	    if (this.props.minDate) {
+	      var prevMonth = this.state.date.clone();
+	      prevMonth = prevMonth.subtractMonth();
+	      var minDate = new DateUtil(this.props.minDate).safeClone();
+	      var renderButton = true;
+
+	      renderButton = prevMonth.month() >= minDate.month();
+	      if (prevMonth.month() === 11) {
+	        if (prevMonth.year() < minDate.year()) {
+	          renderButton = false;
+	        }
+	      }
+
+	      if (renderButton) {
+	        return React.createElement("a", { className: "datepicker__navigation datepicker__navigation--previous",
+	          onClick: this.decreaseMonth });
+	      }
+	    } else {
+	      return React.createElement("a", { className: "datepicker__navigation datepicker__navigation--previous",
+	        onClick: this.decreaseMonth });
+	    }
+	  },
+
+	  renderNextMonthButton: function renderNextMonthButton() {
+	    if (this.props.maxDate) {
+	      var nextMonth = this.state.date.clone();
+	      nextMonth = nextMonth.addMonth();
+	      var maxDate = new DateUtil(this.props.maxDate).safeClone();
+	      var renderButton = true;
+
+	      renderButton = nextMonth.month() <= maxDate.month();
+	      if (nextMonth.month() === 0) {
+	        if (nextMonth.year() > maxDate.year()) {
+	          renderButton = false;
+	        }
+	      }
+
+	      if (renderButton) {
+	        return React.createElement("a", { className: "datepicker__navigation datepicker__navigation--next",
+	          onClick: this.increaseMonth });
+	      }
+	    } else {
+	      return React.createElement("a", { className: "datepicker__navigation datepicker__navigation--next",
+	        onClick: this.increaseMonth });
+	    }
+	  },
+
 	  days: function days(weekStart) {
 	    return weekStart.mapDaysInWeek(this.renderDay);
 	  },
@@ -1946,15 +2002,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      React.createElement(
 	        "div",
 	        { className: "datepicker__header" },
-	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--previous",
-	          onClick: this.decreaseMonth }),
+	        this.renderPreviousMonthButton(),
 	        React.createElement(
 	          "span",
 	          { className: "datepicker__current-month" },
 	          this.state.date.format("MMMM YYYY")
 	        ),
-	        React.createElement("a", { className: "datepicker__navigation datepicker__navigation--next",
-	          onClick: this.increaseMonth }),
+	        this.renderNextMonthButton(),
 	        React.createElement(
 	          "div",
 	          null,
