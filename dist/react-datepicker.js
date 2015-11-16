@@ -106,11 +106,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 
-	  handleBlur: function handleBlur(date) {
-	    console.log("blurring bro");
-	    console.log(date);
-	  },
-
 	  hideCalendar: function hideCalendar() {
 	    if (this.props.onClickOutside) {
 	      setTimeout((function () {
@@ -174,10 +169,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dateFormat: this.props.dateFormat,
 	        focus: this.state.focus,
 	        onFocus: this.handleFocus,
-	        onBlur: this.handleBlur,
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
 	        setSelected: this.setSelected,
+	        validDates: this.props.validDates,
 	        hideCalendar: this.hideCalendar,
 	        placeholderText: this.props.placeholderText }),
 	      this.calendar()
@@ -1933,6 +1928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var isDateValid = validDates.filter(function (date) {
 	      return date.sameDay(day);
 	    });
+	    var disabled = isDateValid.length === 0;
 
 	    return React.createElement(Day, {
 	      key: key,
@@ -1940,7 +1936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      date: this.state.date,
 	      onClick: this.handleDayClick.bind(this, day),
 	      selected: new DateUtil(this.props.selected),
-	      disabled: isDateValid.length === 0 });
+	      disabled: disabled });
 	  },
 
 	  renderPreviousMonthButton: function renderPreviousMonthButton() {
@@ -2153,7 +2149,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  isValueAValidDate: function isValueAValidDate(value) {
 	    var date = moment(value, this.props.dateFormat, true);
-	    return date.isValid();
+
+	    var isAvailable = this.props.validDates.filter(function (validDate) {
+	      return validDate.isSame(date, "day");
+	    });
+	    isAvailable = isAvailable.length > 0;
+
+	    return date.isValid() && isAvailable;
 	  },
 
 	  handleKeyDown: function handleKeyDown(event) {

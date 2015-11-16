@@ -58,7 +58,13 @@ var DateInput = React.createClass({
 
   isValueAValidDate: function(value) {
     var date = moment(value, this.props.dateFormat, true);
-    return date.isValid();
+
+    var isAvailable = this.props.validDates.filter(function(validDate) {
+      return validDate.isSame(date, 'day');
+    });
+    isAvailable = isAvailable.length > 0;
+
+    return (date.isValid() && isAvailable);
   },
 
   handleKeyDown: function(event) {

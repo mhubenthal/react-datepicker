@@ -91,6 +91,7 @@ var Calendar = React.createClass({
     var isDateValid = validDates.filter(function(date) {
       return date.sameDay(day);
     });
+    var disabled = isDateValid.length === 0;
 
     return (
       <Day
@@ -99,7 +100,7 @@ var Calendar = React.createClass({
         date={this.state.date}
         onClick={this.handleDayClick.bind(this, day)}
         selected={new DateUtil(this.props.selected)}
-        disabled={isDateValid.length === 0} />
+        disabled={disabled} />
     );
   },
 
