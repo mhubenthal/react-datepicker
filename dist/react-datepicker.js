@@ -106,6 +106,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 
+	  handleBlur: function handleBlur(date) {
+	    console.log("blurring bro");
+	    console.log(date);
+	  },
+
 	  hideCalendar: function hideCalendar() {
 	    if (this.props.onClickOutside) {
 	      setTimeout((function () {
@@ -169,6 +174,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        dateFormat: this.props.dateFormat,
 	        focus: this.state.focus,
 	        onFocus: this.handleFocus,
+	        onBlur: this.handleBlur,
 	        handleClick: this.onInputClick,
 	        handleEnter: this.hideCalendar,
 	        setSelected: this.setSelected,
@@ -2125,6 +2131,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 
+	  handleBlur: function handleBlur() {
+	    this.props.onBlur(this.state.value);
+	  },
+
 	  handleChange: function handleChange(event) {
 	    var date = moment(event.target.value, this.props.dateFormat, true);
 
@@ -2132,7 +2142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      value: event.target.value
 	    });
 
-	    if (this.isValueAValidDate()) {
+	    if (this.isValueAValidDate(event.target.value)) {
 	      this.props.setSelected(new DateUtil(date));
 	    }
 	  },
@@ -2141,9 +2151,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return !!date ? date.format(this.props.dateFormat) : null;
 	  },
 
-	  isValueAValidDate: function isValueAValidDate() {
-	    var date = moment(event.target.value, this.props.dateFormat, true);
-
+	  isValueAValidDate: function isValueAValidDate(value) {
+	    var date = moment(value, this.props.dateFormat, true);
 	    return date.isValid();
 	  },
 
@@ -2168,6 +2177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      onClick: this.handleClick,
 	      onKeyDown: this.handleKeyDown,
 	      onFocus: this.props.onFocus,
+	      onBlur: this.handleBlur,
 	      onChange: this.handleChange,
 	      className: "datepicker__input",
 	      placeholder: this.props.placeholderText });
