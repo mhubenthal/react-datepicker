@@ -1921,14 +1921,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  renderDay: function renderDay(day, key) {
-	    var validDates = this.props.validDates.map(function (date) {
-	      return new DateUtil(date).safeClone();
-	    });
+	    var disabled = false,
+	        validDates = [],
+	        isDateValid = [];
 
-	    var isDateValid = validDates.filter(function (date) {
-	      return date.sameDay(day);
-	    });
-	    var disabled = isDateValid.length === 0;
+	    if (this.props.validDates.length > 0) {
+	      validDates = this.props.validDates.map(function (date) {
+	        return new DateUtil(date).safeClone();
+	      });
+
+	      isDateValid = validDates.filter(function (date) {
+	        return date.sameDay(day);
+	      });
+
+	      disabled = isDateValid.length === 0;
+	    }
 
 	    return React.createElement(Day, {
 	      key: key,
