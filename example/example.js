@@ -34028,7 +34028,7 @@ var ExampleApp =
 
 	  render: function render() {
 	    return React.createElement("input", {
-	      readonly: true,
+	      readOnly: true,
 	      ref: "input",
 	      type: "text",
 	      value: this.state.value,

@@ -82,7 +82,7 @@ var DateInput = React.createClass({
 
   render: function() {
     return <input
-      readonly
+      readOnly
       ref="input"
       type="text"
       value={this.state.value}
