@@ -2135,7 +2135,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleBlur: function handleBlur() {
-	    this.props.onBlur(this.state.value);
+	    if (this.props.onBlur) {
+	      this.props.onBlur(this.state.value);
+	    }
 	  },
 
 	  handleChange: function handleChange(event) {

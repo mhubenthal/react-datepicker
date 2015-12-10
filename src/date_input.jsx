@@ -37,7 +37,9 @@ var DateInput = React.createClass({
   },
 
   handleBlur: function() {
-    this.props.onBlur(this.state.value);
+    if (this.props.onBlur) {
+      this.props.onBlur(this.state.value);
+    }
   },
 
   handleChange: function(event) {
