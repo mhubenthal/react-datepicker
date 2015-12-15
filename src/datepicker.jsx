@@ -6,6 +6,7 @@ var DateInput = require('./date_input');
 
 var DatePicker = React.createClass({
   propTypes: {
+    disabled: React.PropTypes.bool,
     weekdays: React.PropTypes.arrayOf( React.PropTypes.string ),
     focus: React.PropTypes.bool,
     onFocusChange: React.PropTypes.func,
@@ -103,6 +104,7 @@ var DatePicker = React.createClass({
     return (
       <div>
         <DateInput
+          disabled={this.props.disabled}
           date={this.props.selected}
           dateFormat={this.props.dateFormat}
           focus={this.state.focus}

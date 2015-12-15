@@ -20383,6 +20383,7 @@ var ExampleApp =
 	  displayName: "DatePicker",
 
 	  propTypes: {
+	    disabled: React.PropTypes.bool,
 	    weekdays: React.PropTypes.arrayOf(React.PropTypes.string),
 	    focus: React.PropTypes.bool,
 	    onFocusChange: React.PropTypes.func,
@@ -20481,6 +20482,7 @@ var ExampleApp =
 	      "div",
 	      null,
 	      React.createElement(DateInput, {
+	        disabled: this.props.disabled,
 	        date: this.props.selected,
 	        dateFormat: this.props.dateFormat,
 	        focus: this.state.focus,
@@ -33949,6 +33951,10 @@ var ExampleApp =
 	var DateInput = React.createClass({
 	  displayName: "DateInput",
 
+	  propTypes: {
+	    disabled: React.PropTypes.bool
+	  },
+
 	  getDefaultProps: function getDefaultProps() {
 	    return {
 	      dateFormat: "YYYY-MM-DD"
@@ -34030,6 +34036,7 @@ var ExampleApp =
 	  render: function render() {
 	    return React.createElement("input", {
 	      readOnly: true,
+	      disabled: this.props.disabled,
 	      ref: "input",
 	      type: "text",
 	      value: this.state.value,

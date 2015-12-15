@@ -3,6 +3,9 @@ var DateUtil = require('./util/date');
 var moment = require('moment');
 
 var DateInput = React.createClass({
+  propTypes: {
+    disabled: React.PropTypes.bool
+  },
 
   getDefaultProps: function() {
     return {
@@ -85,6 +88,7 @@ var DateInput = React.createClass({
   render: function() {
     return <input
       readOnly
+      disabled={this.props.disabled}
       ref="input"
       type="text"
       value={this.state.value}
