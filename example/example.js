@@ -20393,7 +20393,6 @@ var ExampleApp =
 	    return {
 	      weekdays: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
 	      focus: null,
-	      onFocusChange: null,
 	      onClickOutside: null
 	    };
 	  },
