@@ -143,9 +143,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  calendar: function calendar() {
 	    if (this.state.focus) {
-	      return React.createElement(
-	        Popover,
-	        null,
+	      return (
+	        //<Popover>
 	        React.createElement(Calendar, {
 	          selected: this.props.selected,
 	          onSelect: this.handleSelect,
@@ -155,7 +154,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          validDates: this.props.validDates,
 	          weekStart: this.props.weekStart,
 	          weekdays: this.props.weekdays })
-	      );
+	      )
+	      //</Popover>
+	      ;
 	    }
 	  },
 

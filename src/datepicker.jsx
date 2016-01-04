@@ -84,17 +84,17 @@ var DatePicker = React.createClass({
   calendar: function() {
     if (this.state.focus) {
       return (
-        <Popover>
-          <Calendar
-            selected={this.props.selected}
-            onSelect={this.handleSelect}
-            hideCalendar={this.hideCalendar}
-            minDate={this.props.minDate}
-            maxDate={this.props.maxDate}
-            validDates={this.props.validDates}
-            weekStart={this.props.weekStart} 
-            weekdays={this.props.weekdays} />
-        </Popover>
+        //<Popover>
+        <Calendar
+          selected={this.props.selected}
+          onSelect={this.handleSelect}
+          hideCalendar={this.hideCalendar}
+          minDate={this.props.minDate}
+          maxDate={this.props.maxDate}
+          validDates={this.props.validDates}
+          weekStart={this.props.weekStart} 
+          weekdays={this.props.weekdays} />
+        //</Popover>
       );
     }
   },

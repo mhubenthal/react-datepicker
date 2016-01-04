@@ -20460,9 +20460,8 @@ var ExampleApp =
 
 	  calendar: function calendar() {
 	    if (this.state.focus) {
-	      return React.createElement(
-	        Popover,
-	        null,
+	      return (
+	        //<Popover>
 	        React.createElement(Calendar, {
 	          selected: this.props.selected,
 	          onSelect: this.handleSelect,
@@ -20472,7 +20471,9 @@ var ExampleApp =
 	          validDates: this.props.validDates,
 	          weekStart: this.props.weekStart,
 	          weekdays: this.props.weekdays })
-	      );
+	      )
+	      //</Popover>
+	      ;
 	    }
 	  },
 
